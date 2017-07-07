@@ -14,6 +14,10 @@ var api_key = 'key-d5b067dbc3964489a62ad4728fd4b9a6';
 //Your domain, from the Mailgun Control Panel
 var domain = 'sandbox4c3085e2b352474b86eb394ab431a2d5.mailgun.org';
 
+var config = require('./config/mailgun');
+
+console.log("API KEY IS: " + config.api_key);
+
 
 
 
@@ -84,7 +88,7 @@ router.post('/email', function(req,res){
       html: emailInfo.emailBody
     }
 
-    if (isValidated){ //send email only if the email info has been validated 
+    if (isValidated){ //send email only if the email info has been validated
             //Invokes the method to send emails given the above data with the helper library
         mailgun.messages().send(data, function (err, body) {
             //If there is an error, render the error page
