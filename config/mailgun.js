@@ -1,6 +1,8 @@
+require('dotenv').config()
+
 module.exports = {
     //Your api key, from Mailgun’s Control Panel
-    api_key: 'key-d5b067dbc3964489a62ad4728fd4b9a6',
+    api_key: process.env.API_KEY,
     //Your domain, from the Mailgun Control Panel
-    domain: 'sandbox4c3085e2b352474b86eb394ab431a2d5.mailgun.org'
+    domain: process.env.DOMAIN
 }

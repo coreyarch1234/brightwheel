@@ -7,24 +7,14 @@ var validateEmail = require('../validators/validateEmail');
 //Validate that all fields are filled in
 var validateEmailFields = require('../validators/validateForm');
 
-//Mailgun
+//Use Mailgun as Default
+var configMailGun = require('../config/mailgun');
+
 var Mailgun = require('mailgun-js');
 //Your api key, from Mailgun’s Control Panel
-var api_key = 'key-d5b067dbc3964489a62ad4728fd4b9a6';
+var api_key = configMailGun.api_key;
 //Your domain, from the Mailgun Control Panel
-var domain = 'sandbox4c3085e2b352474b86eb394ab431a2d5.mailgun.org';
-
-var config = require('./config/mailgun');
-
-console.log("API KEY IS: " + config.api_key);
-
-
-
-
-
-
-
-
+var domain = configMailGun.domain;
 
 
 //Get Form Page for Email Info
@@ -35,46 +25,42 @@ router.get('/', function(req,res){
 //Post Email
 router.post('/email', function(req,res){
     var emailInfo = req.body;
+
     //Strip HTML from email body
     emailInfo.emailBody = emailInfo.emailBody.replace(/<(?:.|\n)*?>/gm, '');
 
-    var isValidated = false; //send the email only if this is true
+    //send the email only if this is true
+    var isValidated = false;
 
+    //This will carry the email information and data on if fields were validated
     var validatedResult = {
         emailInfo: emailInfo,
-        validateEmailFields: true,
+        validateEmailFields: true, // True if all of the fields were filled in
         validateRecipientEmail: true,
         validateSenderEmail: true
     }
-    console.log(emailInfo)
 
     //Check to see if each input field was filled in
     if (validateEmailFields(emailInfo)){
         //Check to see if the email is valid
         if (validateEmail(emailInfo.recipientEmail) && validateEmail(emailInfo.senderEmail)){
-            console.log('everything is validated');
-            console.log(validatedResult.emailInfo.emailBody);
             isValidated = true;
-            res.send(validatedResult);
+            // res.send(validatedResult);
         }
         else if ((validateEmail(emailInfo.recipientEmail) == false)){
-            console.log('Enter a valid recipient email address');
             validatedResult.validateRecipientEmail = false;
             res.send(validatedResult);
         }
         else if (validateEmail(emailInfo.senderEmail) == false){
-            console.log('Enter a valid sender email address');
             validatedResult.validateSenderEmail = false;
             res.send(validatedResult);
         }
     }else{
-        console.log('Fill out all fields');
         validatedResult.validateEmailFields = false;
         res.send(validatedResult);
     }
 
-    //Send Email
-
+    //Send Email Through Mailgun
     //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
     var mailgun = new Mailgun({apiKey: api_key, domain: domain});
 
@@ -93,14 +79,11 @@ router.post('/email', function(req,res){
         mailgun.messages().send(data, function (err, body) {
             //If there is an error, render the error page
             if (err) {
-                res.render('error', { error : err});
+                res.render('layouts/error');
                 console.log("got an error: ", err);
             }
-            //Else we can greet    and leave
             else {
-                //Here "submitted.jade" is the view file for this landing page
-                //We pass the variable "email" from the url parameter in an object rendered by Jade
-                res.render('submitted', { email : req.params.mail });
+                res.send(validatedResult);
                 console.log(body);
             }
         });
