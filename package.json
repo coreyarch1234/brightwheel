@@ -1,0 +1,23 @@
+{
+  "name": "brightwheel",
+  "version": "1.0.0",
+  "description": "Full Stack Engineering Exercise",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreyarch1234/brightwheel.git"
+  },
+  "author": "Corey Harrilal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coreyarch1234/brightwheel/issues"
+  },
+  "homepage": "https://github.com/coreyarch1234/brightwheel#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0"
+  }
+}
