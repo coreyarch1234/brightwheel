@@ -10,6 +10,7 @@ $('#submit-info').click(function(event) {
     var senderName = $('#sender-name').val(); //from_name The name to accompany the from/reply emails
     var subject = $('#subject').val(); //subject The subject line of the email
     var emailBody = $('#email-body').val(); //body The HTML body of the email
+    var emailBody = $('#email-body').val(); //body The HTML body of the email
 
     //Create email JSON object
     var emailObj = {};
@@ -18,7 +19,8 @@ $('#submit-info').click(function(event) {
     emailObj['senderEmail'] = senderEmail;
     emailObj['senderName'] = senderName;
     emailObj['subject'] = subject;
-    emailObj['emailBody'] = emailBody;
+    emailObj['emailBody'] = emailBody //Get rid of html if there is any
+
 
     $.ajax({
       type: 'POST',

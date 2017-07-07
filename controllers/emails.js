@@ -16,6 +16,9 @@ router.get('/', function(req,res){
 //Post Email
 router.post('/email', function(req,res){
     var emailInfo = req.body;
+    //Strip HTML from email body
+    emailInfo.emailBody = emailInfo.emailBody.replace(/<(?:.|\n)*?>/gm, '');
+    
     var validatedResult = {
         emailInfo: emailInfo,
         validateEmailFields: true,
@@ -29,6 +32,7 @@ router.post('/email', function(req,res){
         //Check to see if the email is valid
         if (validateEmail(emailInfo.recipientEmail) && validateEmail(emailInfo.senderEmail)){
             console.log('everything is validated');
+            console.log(validatedResult.emailInfo.emailBody);
             res.send(validatedResult);
         }
         else if ((validateEmail(emailInfo.recipientEmail) == false)){
