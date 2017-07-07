@@ -34,7 +34,7 @@ $('#submit-info').click(function(event) {
           if (validatedResult.validateEmailFields && validatedResult.validateRecipientEmail && validatedResult.validateSenderEmail){
               console.log('great! your email will be sent');
               console.log(validatedResult);
-              $('#correct-answer-alert').html("<h2>Your email will be sent!</h2>");
+              $('#correct-answer-alert').html("<h2>Your email has been sent!</h2>");
           }
           else if (validatedResult.validateEmailFields == false) {
                console.log('you forgot some fields');
