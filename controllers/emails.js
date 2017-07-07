@@ -7,5 +7,12 @@ router.get('/', function(req,res){
     res.render('layouts/home');
 });
 
+//Post Email
+router.post('/email', function(req,res){
+    var email = req.body;
+    console.log('posted successfully: ' + email);
+    res.send(email);
+});
+
 //Export
 module.exports = router;

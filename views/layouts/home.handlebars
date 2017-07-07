@@ -1,43 +1,16 @@
-<!-- Don't forget to validate length and type of email -->
-<!-- <div class="heading-container">
-    <form class="form-container", id="send-email">
-        <div class="form-input">
-            <h3></h3>
-        </div>
-        <div class="form-input">
-            <h3>Recipient Email</h3>
-            <input type="text" id="recipient-email" placeholder="ENTER VALID EMAIL">
-        </div>
-        <div class="form-input">
-            <h3>Recipient Name</h3>
-            <input type="text" id="recipient-name" placeholder="ENTER NAME">
-        </div>
-        <div class="form-input">
-            <h3>Sender Email</h3>
-            <input type="text" id="sender-email" placeholder="ENTER VALID EMAIL">
-        </div>
-        <div class="form-input">
-            <h3>Sender Name</h3>
-            <input type="text" id="sender-name" placeholder="ENTER VALID NAME">
-        </div>
-        <div class="form-input">
-            <h3>Subject Line</h3>
-            <input type="text" id="subject" placeholder="SUBJECT LINE">
-        </div>
-        <div class="form-input">
-            <h3>Email Body</h3>
-            <input type="text" id="email-body" placeholder="ENTER EMAIL BODY">
-        </div>
-    </form>
-</div> -->
-
 <html>
   <head>
     <!--Title-->
     <title>Brightwheel Email Service</title>
 
+    <!--jQuery -->
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- Javascripts -->
+    <script src="/scripts/emails.js"></script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="/styles/application.css">
+
 
     <!--Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
@@ -46,38 +19,42 @@
   </head>
 
   <body>
+
       <div class="heading-container">
-          <form class="form-container", id="send-email">
+          <form class="form-container" id="send-email">
               <div class="form-input">
                   <h3></h3>
               </div>
               <div class="form-input">
                   <h3>Recipient Email</h3>
-                  <input type="text" id="recipient-email" placeholder="ENTER VALID EMAIL">
+                  <input type="text" id="recipient-email" name="recipientEmail" placeholder="ENTER VALID EMAIL">
               </div>
               <div class="form-input">
                   <h3>Recipient Name</h3>
-                  <input type="text" id="recipient-name" placeholder="ENTER NAME">
+                  <input type="text" id="recipient-name" name="recipientName" placeholder="ENTER NAME">
               </div>
               <div class="form-input">
                   <h3>Sender Email</h3>
-                  <input type="text" id="sender-email" placeholder="ENTER VALID EMAIL">
+                  <input type="text" id="sender-email" name="senderEmail" placeholder="ENTER VALID EMAIL">
               </div>
               <div class="form-input">
                   <h3>Sender Name</h3>
-                  <input type="text" id="sender-name" placeholder="ENTER VALID NAME">
+                  <input type="text" id="sender-name" name="senderName" placeholder="ENTER VALID NAME">
               </div>
               <div class="form-input">
                   <h3>Subject Line</h3>
-                  <input type="text" id="subject" placeholder="SUBJECT LINE">
+                  <input type="text" id="subject" name="subject" placeholder="SUBJECT LINE">
               </div>
               <div class="form-input">
                   <h3>Email Body</h3>
-                  <input type="text" id="email-body" placeholder="ENTER EMAIL BODY">
+                  <!-- <input type="text" id="email-body" placeholder="ENTER EMAIL BODY"> -->
+                  <textarea name="emailBody" id="email-body" cols="50" rows="10" placeholder="ENTER EMAIL BODY"></textarea>
+              </div>
+              <div class="submit-button">
+                  <input type="submit" id="submit-info">
               </div>
           </form>
       </div>
      </body>
   </body>
-
 </html>
