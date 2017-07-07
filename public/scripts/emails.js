@@ -27,8 +27,8 @@ $('#submit-info').click(function(event) {
       fail: function() {
         alert(error.message);
       },
-      success: function(data) {
-        console.log(data)
+      success: function(emailResult) {
+        console.log(emailResult)
       }
     });
    });
