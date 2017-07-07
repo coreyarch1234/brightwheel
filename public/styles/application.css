@@ -1,0 +1,51 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	width: 100%;
+	background-color: #333132;
+	font-family: 'Montserrat';
+  font-size: 1.2em;
+}
+
+.heading-container {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%, -20%);
+}
+
+.form-container {
+  font-size: 0.5em;
+  color: #f1f2f2;
+}
+
+.form-input {
+  margin-top: 20px;
+}
+
+.form-input h3 {
+  letter-spacing: 1px;
+	font-size: 1.2em;
+	font-weight: 700;
+}
+
+.form-input input {
+    width: 100%;
+    padding: 8px 15px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-family: 'Montserrat';
+    font-weight: 700;
+    text-transform: uppercase;
+		color: black;
+}
+
+.form-input input:focus {
+  outline-color: #39b54a;
+}

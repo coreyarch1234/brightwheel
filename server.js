@@ -6,6 +6,11 @@ var exphbs = require('express-handlebars');
 var app = express();
 var port = 3000;
 
+// Setting templating engine
+app.engine('handlebars', exphbs({defaultLayout: 'home'}));
+app.set('view engine', 'handlebars');
+app.use(express.static('public'));
+
 //Controller Imports
 var emails = require('./controllers/emails.js');
 app.use('/', emails);
