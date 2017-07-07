@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 // SUBMIT EMAIL  POST FORM
 $('#submit-info').click(function(event) {
+    event.preventDefault();
     //Grab all email info data and store in variables
     var recipientEmail = $('#recipient-email').val(); // to The email address to send to
     var recipientName = $('#recipient-name').val(); //to_name The name to accompany the email
@@ -31,20 +32,23 @@ $('#submit-info').click(function(event) {
           if (validatedResult.validateEmailFields && validatedResult.validateRecipientEmail && validatedResult.validateSenderEmail){
               console.log('great! your email will be sent');
               console.log(validatedResult);
+              $('#correct-answer-alert').html("<h2>Your email will be sent!</h2>");
           }
           else if (validatedResult.validateEmailFields == false) {
                console.log('you forgot some fields');
                console.log(validatedResult);
+               $('#correct-answer-alert').html("<h2>Fill out all fields</h2>");
           }
           else if (validatedResult.validateRecipientEmail == false){
               console.log('enter a valid recipient email address');
               console.log(validatedResult);
+              $('#correct-answer-alert').html("<h2>Enter a valid recipient email</h2>");
           }
           else if (validatedResult.validateSenderEmail == false){
               console.log('enter a valid sender email address');
               console.log(validatedResult);
+              $('#correct-answer-alert').html("<h2>Enter a valid sender email</h2>");
           }
-        // console.log(validatedResult)
       }
     });
    });

@@ -95,21 +95,11 @@ html, body {
 	text-decoration: none;
 }
 
-.answer-alert {
-	color: #f1f2f2;
-	font-size: 1em;
-	position: absolute;
-	top: 90%;
-	left: 50%;
-	transform: translate(-50%,0%);
-}
-.answer-alert-display {
-	display: none;
-}
-.answer-alert-container {
+.validate-container {
+    color: red;
 	width: 100%;
 	position: absolute;
-	top: 60%;
+	top: 80%;
 	left: 50%;
 	transform: translate(-50%, -60%);
 	text-align: center;
