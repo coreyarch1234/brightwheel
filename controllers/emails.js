@@ -1,22 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
+//Validate Email address
+var validateEmail = require('../validators/validateEmail');
 
-function validateEmail(email) {
-    var re = /.+@.+\..+/i;
-    return re.test(email);
-}
+//Validate that all fields are filled in
+var validateEmailFields = require('../validators/validateForm');
 
-function validateEmailFields(emailInfo){
-    if(emailInfo.constructor === Object) {
-        for (var i = 0; i < Object.keys(emailInfo).length; i++){
-            if (Object.values(emailInfo)[i].length === 0){
-                return false;
-            }
-        }
-        return true;
-    }
-}
+
 //Get Form Page for Email Info
 router.get('/', function(req,res){
     res.render('layouts/home');
@@ -25,8 +16,10 @@ router.get('/', function(req,res){
 //Post Email
 router.post('/email', function(req,res){
     var emailInfo = req.body;
-    //Check to see if each input field has been filled in
+
+    //Check to see if each input field was filled in
     if (validateEmailFields(emailInfo)){
+        //Check to see if the email is valid
         if (validateEmail(emailInfo.emailBody)){
             console.log('everything is validated');
             res.send({emailInfo: emailInfo, validated: true});
