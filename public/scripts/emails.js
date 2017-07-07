@@ -27,8 +27,24 @@ $('#submit-info').click(function(event) {
       fail: function() {
         alert(error.message);
       },
-      success: function(emailResult) {
-        console.log(emailResult)
+      success: function(validatedResult) {
+          if (validatedResult.validateEmailFields && validatedResult.validateRecipientEmail && validatedResult.validateSenderEmail){
+              console.log('great! your email will be sent');
+              console.log(validatedResult);
+          }
+          else if (validatedResult.validateEmailFields == false) {
+               console.log('you forgot some fields');
+               console.log(validatedResult);
+          }
+          else if (validatedResult.validateRecipientEmail == false){
+              console.log('enter a valid recipient email address');
+              console.log(validatedResult);
+          }
+          else if (validatedResult.validateSenderEmail == false){
+              console.log('enter a valid sender email address');
+              console.log(validatedResult);
+          }
+        // console.log(validatedResult)
       }
     });
    });

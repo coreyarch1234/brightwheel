@@ -16,20 +16,35 @@ router.get('/', function(req,res){
 //Post Email
 router.post('/email', function(req,res){
     var emailInfo = req.body;
+    var validatedResult = {
+        emailInfo: emailInfo,
+        validateEmailFields: true,
+        validateRecipientEmail: true,
+        validateSenderEmail: true
+    }
+    console.log(emailInfo)
 
     //Check to see if each input field was filled in
     if (validateEmailFields(emailInfo)){
         //Check to see if the email is valid
-        if (validateEmail(emailInfo.emailBody)){
+        if (validateEmail(emailInfo.recipientEmail) && validateEmail(emailInfo.senderEmail)){
             console.log('everything is validated');
-            res.send({emailInfo: emailInfo, validated: true});
-        }else{
-            console.log('Enter a valid email address');
-            res.send({emailInfo: emailInfo, validated: false});
+            res.send(validatedResult);
+        }
+        else if ((validateEmail(emailInfo.recipientEmail) == false)){
+            console.log('Enter a valid recipient email address');
+            validatedResult.validateRecipientEmail = false;
+            res.send(validatedResult);
+        }
+        else if (validateEmail(emailInfo.senderEmail) == false){
+            console.log('Enter a valid sender email address');
+            validatedResult.validateSenderEmail = false;
+            res.send(validatedResult);
         }
     }else{
         console.log('Fill out all fields');
-        res.send({emailInfo: emailInfo, validated: false});
+        validatedResult.validateEmailFields = false;
+        res.send(validatedResult);
     }
 });
 
