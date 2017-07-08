@@ -372,7 +372,22 @@ Now that I have both post request functions, I can use that in my '/email' endpo
 
 If ```isValidated``` is true, we can use either SendGrid or Mailgun. By default, I have SendGrid set. If we need to failover to Mailgun, it is as easy as commenting out the ```useSendGrid``` function and uncommenting the ```useMailGun``` function. This makes it super easy to prevent downtime during an email service provider outage.
 
+
+
 # Tradeoffs and Implementations if I had more time:
+
+It is important to note that I used the free trial versions of Mailgun and Sendgrid. Currently, my implementation works fine, but emails can only be sent to the email I used to sign up on their sites. This is:
+
+'corey.harrilal@students.makeschool.com' for Mailgun and
+'harrilala@mit.edu' for Sendgrid. 
+
+Because of this, I have included a demo:
+
+![](https://media.giphy.com/media/3og0IPeBLr3l3gLwre/giphy.gif)
+
+In general, using the Web API for the requests instead of the built in client libraries is faster. However, there are more features that you can implement easily with the libraries such as sending to multiple recipients.
+
+If I had more time, I would have written tests. I would also have included an error handlebars view that would show if an email failed to send. I would have also included the from_name and to_name in the body of the post request. 
 
 
 
