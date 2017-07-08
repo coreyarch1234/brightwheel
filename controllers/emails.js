@@ -21,59 +21,188 @@ var mailgun_api_key = configMailGun.api_key;
 //Your domain, from the Mailgun Control Panel
 var domain = configMailGun.domain;
 
+var unirest = require('unirest');
+var request = require('request');
+
 //Simply run this function to use Sendgrid as mail service
 function useSendGrid(emailInfo){
-    var sg = require('sendgrid')(sendgrid_api_key);
 
-    var fromEmail = new helper.Email(emailInfo.senderEmail);
-    var toEmail = new helper.Email(emailInfo.recipientEmail);
-    var subject =  emailInfo.subject;
-    var content = new helper.Content('text/plain', emailInfo.emailBody);
-    var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+    // var data = {
+    //   fromEmail: emailInfo.senderEmail,
+    //   toEmail: emailInfo.recipientEmail,
+    //   subject: emailInfo.subject,
+    //   content: emailInfo.emailBody
+    // }
 
-    var request = sg.emptyRequest({
-      method: 'POST',
-      path: '/v3/mail/send',
-      body: mail.toJSON()
-    });
+    var data = {
+        from: emailInfo.senderEmail,
+        to: emailInfo.recipientEmail,
+        subject: emailInfo.subject,
+        content: emailInfo.emailBody
+    }
+    // request('http://www.google.com', function (error, response, body) {
+    //   console.log('error:', error); // Print the error if one occurred
+    //   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    //   console.log('body:', body); // Print the HTML for the Google homepage.
+    // });
+    // request.post('https://api.sendgrid.com/v3/mail/send', data)
+    //   .on('response', function(response) {
+    //     console.log(response.statusCode) // 200
+    //     // console.log(response.headers['content-type']) // 'image/png'
+    // });
+        //
+    // var header = new Buffer("api_key:"+sendgrid_api_key).toString('base64');
+    // //
+    // unirest.post('https://api.sendgrid.com/v3/mail/send')
+    //     // .header('Content-Type', 'application/json')
+    //     // .header('Authorization', 'Bearer ' + sendgrid_api_key)
+    //     .headers({'Content-Type': 'application/json', 'Authorization': 'Bearer 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'})
+    //     .send(data)
+    //     .end(function(res){
+    //         console.log(res.statusCode)
+    //         console.log("post sendgrid request sent");
+    //     });
 
-
-    sg.API(request, function (error, response) {
-      if (error) {
-        console.log('Error response received');
-        res.render('layouts/error');
+    var options = {
+      method: 'post',
+      body: data,
+      json: true,
+      url: 'https://api.sendgrid.com/v3/mail/send',
+      'auth': {
+              'bearer': sendgrid_api_key
+      },
+      body: {
+          from: {
+            email: emailInfo.senderEmail
+          },
+          personalizations: [{
+            to: [{ email: emailInfo.recipientEmail }]
+          }],
+          subject: emailInfo.subject,
+          content: [{
+            type: "text/plain",
+            value: emailInfo.emailBody
+          }]
+}
+    }
+    request(options, function (err, res, body) {
+      if (err) {
+        console.error('error posting json: ', err)
+        throw err
       }
-      console.log(response.statusCode);
-      console.log("the response body is: " + response.body);
-      console.log(response.headers);
-    });
+      var headers = res.headers
+      var statusCode = res.statusCode
+      console.log('headers: ', headers)
+      console.log('statusCode: ', statusCode)
+      console.log('body: ', body)
+    })
+
+  //   var headersOpt = {
+  //       "content-type": "application/json",
+  //   };
+  //   request({
+  //     method: 'POST',
+  //     uri: 'https://api.sendgrid.com/v3/mail/send',
+  //     'auth': {
+  //             'bearer': sendgrid_api_key
+  //     },
+  //     multipart: [
+  //        {
+  //            headers: headersOpt,
+  //            json: true,
+  //            body: JSON.stringify(data)
+  //        }
+  //     ],
+  // },
+  //     function (error, response, body) {
+  //         if (error) {
+  //           return console.error('upload failed:', error);
+  //         }
+  //         console.log('Upload successful!  Server responded with:', body);
+  //     });
+
+
+        // var options = {
+        //   url: 'https://api.sendgrid.com/api/mail.send.json',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Authorization': 'Bearer' + sendgrid_api_key
+        // },
+        //     from: emailInfo.senderEmail,
+        //     to: emailInfo.recipientEmail,
+        //     subject: emailInfo.subject,
+        //     content: emailInfo.emailBody.
+        //     api_key: sendgrid_api_key
+        // };
+        //
+        // function callback(error, response, body) {
+        //   if (!error && response.statusCode == 200) {
+        //     var info = JSON.parse(body);
+        //     console.log(info.stargazers_count + " Stars");
+        //     console.log(info.forks_count + " Forks");
+        //   }
+        // }
+        //
+        // request(options, callback);
+
+    // var sg = require('sendgrid')(sendgrid_api_key);
+    //
+    // var fromEmail = new helper.Email(emailInfo.senderEmail);
+    // var toEmail = new helper.Email(emailInfo.recipientEmail);
+    // var subject =  emailInfo.subject;
+    // var content = new helper.Content('text/plain', emailInfo.emailBody);
+    // var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+    //
+    // var request = sg.emptyRequest({
+    //   method: 'POST',
+    //   path: '/v3/mail/send',
+    //   body: mail.toJSON()
+    // });
+    //
+    //
+    // sg.API(request, function (error, response) {
+    //   if (error) {
+    //     console.log('Error response received');
+    //     res.render('layouts/error');
+    //   }
+    //   console.log(response.statusCode);
+    //   console.log("the response body is: " + response.body);
+    //   console.log(response.headers);
+    // });
 };
+
+
 
 //Simply run this function to use Mailgun as mail service
 function useMailGun(emailInfo){
-    //Send Email Through Sendgrid
-    //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
-    var mailgun = new Mailgun({apiKey: mailgun_api_key, domain: domain});
     var data = {
-    //Specify email data
       from: emailInfo.senderEmail,
-    //The email to contact
       to: emailInfo.recipientEmail,
-    //Subject and text data
       subject: emailInfo.subject,
       html: emailInfo.emailBody
     }
+
+    var header = new Buffer("api:"+mailgun_api_key).toString('base64');
+
+    unirest.post('https://api.mailgun.net/v3/' + domain + '/messages')
+        .headers({'Authentication': "Basic " + header})
+        .send(data)
+        .end(function(res){
+            console.log("post mailgun request sent");
+        });
+
+
     //Invokes the method to send emails given the above data with the helper library
-    mailgun.messages().send(data, function (err, body) {
-        //If there is an error, render the error page
-        if (err) {
-            res.render('layouts/error');
-            console.log("got an error: ", err);
-        }
-        else {
-            console.log(body);
-        }
-    });
+    // mailgun.messages().send(data, function (err, body) {
+    //     //If there is an error, render the error page
+    //     if (err) {
+    //         res.render('layouts/error');
+    //         console.log("got an error: ", err);
+    //     }
+    //     else {
+    //         console.log(body);
+    //     }
+    // });
 };
 
 
@@ -126,6 +255,7 @@ router.post('/email', function(req,res){
         //To use sendgrid, call useSendGrid()
         //To use mailgun, call useMailGun()
         useSendGrid(emailInfo);
+        // useMailGun(emailInfo);
         res.send(validatedResult);
     };
 });
