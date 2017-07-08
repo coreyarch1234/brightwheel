@@ -376,10 +376,10 @@ If ```isValidated``` is true, we can use either SendGrid or Mailgun. By default,
 
 # Tradeoffs and Implementations if I had more time:
 
-It is important to note that I used the free trial versions of Mailgun and Sendgrid. Currently, my implementation works fine, but emails can only be sent to the emails I used to sign up on their sites. This is:
+It is important to note that I used the free trial versions of Mailgun and SendGrid. Currently, my implementation works fine, but emails can only be sent to the emails I used to sign up on their sites. This is:
 
 'corey.harrilal@students.makeschool.com' for Mailgun and
-'harrilal@mit.edu' for Sendgrid.
+'harrilal@mit.edu' for SendGrid.
 
 Because of this, I have included a demo:
 
